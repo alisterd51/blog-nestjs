@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Base image for production
-FROM node:20-alpine
+FROM node:20-alpine AS production
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -26,7 +26,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm ci --omit=dev AS production
+RUN npm ci --omit=dev
 
 # Copy a "dist" folder for the production build
 COPY --from=build /usr/src/app/dist ./dist
