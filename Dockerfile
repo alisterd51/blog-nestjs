@@ -1,6 +1,9 @@
 # Base image for build
 FROM node:20-alpine AS build
 
+# Update npm
+RUN npm install -g npm
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -18,6 +21,9 @@ RUN npm run build
 
 # Base image for production
 FROM node:20-alpine AS production
+
+# Update npm
+RUN npm install -g npm
 
 # Create app directory
 WORKDIR /usr/src/app
