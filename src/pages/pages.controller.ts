@@ -22,6 +22,11 @@ export class PagesController {
     return this.pagesService.findOne(+id);
   }
 
+  @Get('name/:name')
+  findOneByName(@Param('name') name: string) {
+    return this.pagesService.findOneByName(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePageDto: UpdatePageDto) {
     return this.pagesService.update(+id, updatePageDto);

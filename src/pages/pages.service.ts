@@ -48,6 +48,10 @@ export class PagesService {
     return this.pages.find(page => page.id === id);
   }
 
+  async findOneByName(name: string): Promise<Page | undefined> {
+    return this.pages.find(page => page.path === name);
+  }
+
   update(id: number, updatePageDto: UpdatePageDto) {
     return `This action updates a #${id} page`;
   }
