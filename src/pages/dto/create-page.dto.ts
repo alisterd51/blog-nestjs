@@ -4,7 +4,7 @@ import { IsString, IsUrl } from "class-validator";
 export class CreatePageDto {
   @IsString()
   @ApiProperty()
-  readonly path: string;
+  readonly name: string;
 
   @IsString()
   @ApiProperty()
