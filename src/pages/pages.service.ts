@@ -2,61 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
 import { Page } from './entities/page.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class PagesService {
-  private readonly pages: Page[] = [
-    {
-      id: 0,
-      title: 'Création du présent site',
-      summary: 'Voici le premier article : La création de ce blog ! Du coup, je vais écrire ici toutes les étapes qui ont mené au blog tel qu\'il est aujourd\'hui.',
-      url: 'https://cdn.anclarma.fr/articles/articles/blog-angular.md',
-      path: 'blog-angular'
-    },
-    {
-      id: 1,
-      title: 'Le futur de la réalité virtuelle',
-      summary: 'La réalité virtuelle (RV) est un domaine en constante évolution de la technologie qui offre des expériences immersives captivantes.',
-      url: 'https://cdn.anclarma.fr/articles/articles/vr-unparalleled-immersion.md',
-      path: 'vr-unparalleled-immersion'
-    },
-    {
-      id: 2,
-      title: 'test',
-      summary: 'summary',
-      url: 'https://cdn.anclarma.fr/articles/articles/test.md',
-      path: 'test'
-    },
-    {
-      id: 3,
-      title: 'Publicité',
-      summary: 'test de google adsense',
-      url: 'https://cdn.anclarma.fr/articles/articles/ads.md',
-      path: 'ads'
-    }
-  ];
+  constructor(
+    @InjectRepository(Page)
+    private pagesRepository: Repository<Page>,
+  ) { }
 
   create(createPageDto: CreatePageDto) {
-    return 'This action adds a new page';
+    const page = this.pagesRepository.create(createPageDto)
+    return this.pagesRepository.save(page);
   }
 
-  async findAll(): Promise<Page[]> {
-    return this.pages;
+  findAll(): Promise<Page[]> {
+    return this.pagesRepository.find();
   }
 
-  async findOne(id: number): Promise<Page | undefined> {
-    return this.pages.find(page => page.id === id);
-  }
-
-  async findOneByName(name: string): Promise<Page | undefined> {
-    return this.pages.find(page => page.path === name);
+  findOne(where: FindOneOptions<Page>): Promise<Page | null> {
+    return this.pagesRepository.findOne(where);
   }
 
   update(id: number, updatePageDto: UpdatePageDto) {
-    return `This action updates a #${id} page`;
+    return this.pagesRepository.update({ id }, updatePageDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} page`;
+  remove(id: number): Promise<DeleteResult> {
+    return this.pagesRepository.delete(id);
   }
 }
