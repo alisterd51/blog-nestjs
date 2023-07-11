@@ -4,6 +4,10 @@ import { IsString, IsUrl } from "class-validator";
 export class CreatePageDto {
   @IsString()
   @ApiProperty()
+  readonly path: string;
+
+  @IsString()
+  @ApiProperty()
   readonly title: string;
 
   @IsString()
@@ -13,8 +17,4 @@ export class CreatePageDto {
   @IsUrl()
   @ApiProperty()
   readonly url: string;
-
-  @IsString()
-  @ApiProperty()
-  readonly path: string;
 }

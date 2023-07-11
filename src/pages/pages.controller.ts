@@ -34,7 +34,7 @@ export class PagesController {
   @Get('name/:name')
   findOneByName(@Param('name') name: string) {
     return this.pagesService.findOne({
-      where: { path: name },
+      where: { name: name },
     });
   }
 

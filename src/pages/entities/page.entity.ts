@@ -9,6 +9,10 @@ export class Page {
 
   @Column()
   @ApiProperty()
+  name: string;
+
+  @Column()
+  @ApiProperty()
   title: string;
 
   @Column()
@@ -18,8 +22,4 @@ export class Page {
   @Column()
   @ApiProperty()
   url: string;
-
-  @Column()
-  @ApiProperty()
-  path: string;
 }
