@@ -8,7 +8,17 @@ describe('PagesController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PagesController],
-      providers: [PagesService],
+      providers: [
+        PagesService,
+        {
+          provide: PagesService,
+          useValue: {
+            getAll: jest
+              .fn()
+              .mockResolvedValue([]),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<PagesController>(PagesController);
