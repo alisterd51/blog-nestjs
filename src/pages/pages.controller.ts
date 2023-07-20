@@ -5,8 +5,7 @@ import { UpdatePageDto } from './dto/update-page.dto';
 import { Public } from '../auth/public.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
-import { Observable, map } from 'rxjs';
-import { AxiosResponse } from 'axios';
+import { map } from 'rxjs';
 
 @ApiTags('pages')
 @Controller('pages')
