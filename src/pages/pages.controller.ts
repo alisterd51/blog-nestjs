@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { PagesService } from './pages.service';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
@@ -13,7 +22,7 @@ export class PagesController {
   constructor(
     private readonly pagesService: PagesService,
     private readonly httpService: HttpService,
-    ) {}
+  ) {}
 
   @Post()
   @ApiBearerAuth()
@@ -46,26 +55,29 @@ export class PagesController {
   @Public()
   @Get('file/:id')
   async findOneFile(@Param('id', ParseIntPipe) id: number) {
-    return this.httpService.get((await this.findOne(id)).url, {
-      headers: { 'Accept': 'application/json' }
-    }).pipe(
-        map(response => response.data),
-    );
+    return this.httpService
+      .get((await this.findOne(id)).url, {
+        headers: { Accept: 'application/json' },
+      })
+      .pipe(map((response) => response.data));
   }
 
   @Public()
   @Get('file/name/:name')
   async findOneFileByName(@Param('name') name: string) {
-    return this.httpService.get((await this.findOneByName(name)).url, {
-      headers: { 'Accept': 'application/json' }
-    }).pipe(
-        map(response => response.data),
-    );
+    return this.httpService
+      .get((await this.findOneByName(name)).url, {
+        headers: { Accept: 'application/json' },
+      })
+      .pipe(map((response) => response.data));
   }
 
   @Patch(':id')
   @ApiBearerAuth()
-  update(@Param('id', ParseIntPipe) id: number, @Body() updatePageDto: UpdatePageDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePageDto: UpdatePageDto,
+  ) {
     return this.pagesService.update(id, updatePageDto);
   }
 

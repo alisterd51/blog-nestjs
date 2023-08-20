@@ -6,12 +6,9 @@ import { Page } from './entities/page.entity';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Page]),
-    HttpModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Page]), HttpModule],
   controllers: [PagesController],
   providers: [PagesService],
-  exports: [TypeOrmModule, PagesService]
+  exports: [TypeOrmModule, PagesService],
 })
 export class PagesModule {}

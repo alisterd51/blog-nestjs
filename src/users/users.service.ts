@@ -8,10 +8,10 @@ export class UsersService {
       id: 1,
       username: process.env.BLOG_ADMIN_USER,
       password: process.env.BLOG_ADMIN_PASSWORD,
-    }
+    },
   ];
 
   async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username)
+    return this.users.find((user) => user.username === username);
   }
 }

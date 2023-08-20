@@ -51,6 +51,7 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - run: npm run test:e2e
+    - run: npm run lint
     env:
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432

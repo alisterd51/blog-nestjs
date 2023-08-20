@@ -11,9 +11,7 @@ describe('PagesService', () => {
         {
           provide: PagesService,
           useValue: {
-            getAll: jest
-              .fn()
-              .mockResolvedValue([]),
+            getAll: jest.fn().mockResolvedValue([]),
           },
         },
       ],

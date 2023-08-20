@@ -15,9 +15,7 @@ describe('PagesController', () => {
         {
           provide: PagesService,
           useValue: {
-            getAll: jest
-              .fn()
-              .mockResolvedValue([]),
+            getAll: jest.fn().mockResolvedValue([]),
           },
         },
       ],

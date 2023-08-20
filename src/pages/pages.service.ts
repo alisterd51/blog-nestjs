@@ -10,10 +10,10 @@ export class PagesService {
   constructor(
     @InjectRepository(Page)
     private pagesRepository: Repository<Page>,
-  ) { }
+  ) {}
 
   create(createPageDto: CreatePageDto) {
-    const page = this.pagesRepository.create(createPageDto)
+    const page = this.pagesRepository.create(createPageDto);
     return this.pagesRepository.save(page);
   }
 
