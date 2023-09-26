@@ -1,6 +1,33 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabled": true,
+  "baseBranches": ["master"],
+  "commitMessageSuffix": "({{updateType}})",
   "extends": [
-    "config:base"
+    "config:recommended",
+    "default:semanticCommits",
+    ":disableRateLimiting",
+    ":rebaseStalePrs"
+  ],
+  "enabledManagers": ["dockerfile", "npm", "github-actions"],
+  "packageRules": [
+    {
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["major"],
+      "enabled": true
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "enabled": true
+    },
+    {
+      "description": "Automatically merge minor and patch level updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true,
+      "enabled": true
+    }
   ]
 }
