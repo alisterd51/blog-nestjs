@@ -1,5 +1,5 @@
 # Base image for build
-FROM node:20.0.0-alpine AS build
+FROM node:20.7.0-alpine AS build
 
 # Update npm
 RUN npm install -g npm
@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # Base image for production
-FROM node:20.0.0-alpine AS production
+FROM node:20.7.0-alpine AS production
 
 # Update npm
 RUN npm install -g npm
