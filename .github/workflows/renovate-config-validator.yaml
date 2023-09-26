@@ -1,0 +1,19 @@
+name: lint
+
+on: [pull_request, push]
+
+jobs:
+  lint-bash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'npm'
+      - name: Install renovate
+        run: npm i renovate
+      - name: run renovate-config-validator
+        run: ./node_modules/renovate/dist/config-validator.js --strict
