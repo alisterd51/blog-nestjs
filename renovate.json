@@ -9,6 +9,11 @@
     ":disableRateLimiting",
     ":rebaseStalePrs"
   ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true,
+    "assignees": ["@alisterd51"]
+  },
   "enabledManagers": ["dockerfile", "npm", "github-actions"],
   "packageRules": [
     {
