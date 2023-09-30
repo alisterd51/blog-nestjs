@@ -1,9 +1,13 @@
 name: lint
 
-on: [pull_request, push]
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
 
 jobs:
-  lint-bash:
+  lint-renovate-config:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
