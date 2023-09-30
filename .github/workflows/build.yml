@@ -1,0 +1,185 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+  lint-eslint:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Clean install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
+  lint-prettier:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Clean install
+        run: npm ci
+      - name: Prettier
+        run: npm run prettier
+
+  test:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Clean install
+        run: npm ci
+      - name: Test
+        run: npm run test
+
+  coverage:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Clean install
+        run: npm ci
+      - name: Coverage
+        run: npm run test:cov
+
+  test-success:
+    needs: [setup, test, coverage]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail for failed or cancelled tests
+        if: |
+          needs.test.result == 'failure' ||
+          needs.test.result == 'cancelled'
+        run: exit 1
+
+      - name: Fail for skipped tests when PR is ready for review
+        if: |
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.draft != true &&
+          needs.test.result == 'skipped'
+        run: exit 1
+
+      - name: Fail for failed or cancelled coverage
+        if: |
+          needs.coverage.result == 'failure' ||
+          needs.coverage.result == 'cancelled'
+        run: exit 1
+
+      - name: Fail for skipped coverage when PR is ready for review
+        if: |
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.draft != true &&
+          needs.coverage.result == 'skipped'
+        run: exit 1
+
+  test-e2e:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: Clean install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test e2e
+        run: npm run test:e2e
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+      JWT_SECRET: ${{ vars.JWT_SECRET }}
+      BLOG_ADMIN_USER: ${{ vars.BLOG_ADMIN_USER }}
+      BLOG_ADMIN_PASSWORD: ${{ vars.BLOG_ADMIN_PASSWORD }}
+
+  release:
+    needs:
+      - setup
+      - lint-eslint
+      - lint-prettier
+      - test
+      - coverage
+      - test-success
+      - test-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - name: semantic-release
+        run: echo test
