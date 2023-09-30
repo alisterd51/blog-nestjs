@@ -1,4 +1,4 @@
-name: lint
+name: Renovate config validator
 
 on:
   push:
