@@ -2,7 +2,7 @@
 FROM node:20.8.0-alpine AS build
 
 # Update npm
-RUN npm install -g npm
+RUN npm install -g npm@10.1.0
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -23,7 +23,7 @@ RUN npm run build
 FROM node:20.8.0-alpine AS production
 
 # Update npm
-RUN npm install -g npm
+RUN npm install -g npm@10.1.0
 
 # Create app directory
 WORKDIR /usr/src/app
