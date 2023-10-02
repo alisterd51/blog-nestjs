@@ -60,6 +60,16 @@ jobs:
       - name: Prettier
         run: npm run prettier
 
+  lint-dockerfile:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
   test:
     needs: [setup]
     runs-on: ubuntu-latest
@@ -168,6 +178,7 @@ jobs:
       - setup
       - lint-eslint
       - lint-prettier
+      - lint-dockerfile
       - test
       - coverage
       - test-success
