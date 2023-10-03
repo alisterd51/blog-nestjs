@@ -212,5 +212,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-      - name: semantic-release
-        run: echo test
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npx semantic-release
