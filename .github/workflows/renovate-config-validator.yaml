@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - master
-  pull_request: {}
+    paths:
+      - 'renovate.json'
+  pull_request:
+    paths:
+      - 'renovate.json'
 
 jobs:
   lint-renovate-config:
