@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "release": {
+    "branches": ["master"]
+  },
   "scripts": {
     "build": "nest build",
     "prettier": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
