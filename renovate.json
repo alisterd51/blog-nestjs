@@ -15,7 +15,7 @@
     "assignees": ["@alisterd51"]
   },
   "separateMinorPatch": true,
-  "enabledManagers": ["dockerfile", "npm", "github-actions"],
+  "enabledManagers": ["dockerfile", "npm", "github-actions", "regex"],
   "packageRules": [
     {
       "matchManagers": ["dockerfile"],
