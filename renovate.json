@@ -31,6 +31,14 @@
       "matchCurrentVersion": "!/^0/",
       "automerge": true,
       "enabled": true
+    },
+    {
+      "description": "Automatically merge minor and patch level updates",
+      "matchManagers": ["regex"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "enabled": true
     }
   ],
   "customManagers": [
