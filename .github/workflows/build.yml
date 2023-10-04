@@ -220,4 +220,4 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: npx semantic-release@22.0.0
+        run: npx semantic-release@22.0.5
