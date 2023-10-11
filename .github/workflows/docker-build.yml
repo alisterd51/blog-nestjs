@@ -14,4 +14,4 @@ jobs:
         run: >-
           docker build .
           --file Dockerfile
-          --tag anclarma/blog-nestjs:$(date +%s)
+          --tag anclarma/blog-nestjs:"$(date +%s)"
