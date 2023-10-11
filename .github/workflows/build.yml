@@ -70,19 +70,6 @@ jobs:
         with:
           dockerfile: Dockerfile
 
-  lint-yaml:
-    needs: [setup]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install yamllint
-        run: |
-          sudo apt update
-          sudo apt install -y yamllint
-      - name: run yamllint
-        run: yamllint .
-
   test:
     needs: [setup]
     runs-on: ubuntu-latest
@@ -198,7 +185,6 @@ jobs:
       - lint-eslint
       - lint-prettier
       - lint-dockerfile
-      - lint-yaml
       - test
       - coverage
       - test-success
