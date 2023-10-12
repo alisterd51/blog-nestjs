@@ -191,7 +191,8 @@ jobs:
       - test-e2e
     runs-on: ubuntu-latest
     outputs:
-      new_release_published: ${{ steps.semantic.outputs.new_release_published}}
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_git_tag: ${{ steps.semantic.outputs.new_release_git_tag }}
     permissions:
       contents: write
       issues: write
@@ -231,13 +232,12 @@ jobs:
           images: anclarma/blog-nestjs
       - name: Test
         run: |
-          echo ${{ steps.meta.outputs.tags }}
-          echo ${{ steps.meta.outputs.labels }}
+          echo ${{ needs.release.outputs.new_release_git_tag }}
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v5
       #   with:
       #     context: .
       #     push: true
       #     platforms: linux/amd64,linux/arm64
-      #     tags: ${{ steps.meta.outputs.tags }}
+      #     tags: anclarma/blog-nestjs:${{ needs.release.outputs.new_release_git_tag }},anclarma/blog-nestjs:latest
       #     labels: ${{ steps.meta.outputs.labels }}
