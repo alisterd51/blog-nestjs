@@ -1,12 +1,12 @@
 name: Lint github workflows
 
 on:
-  push:
+  pull_request:
     paths:
       - '.github/**'
 
 jobs:
-  build:
+  actionlint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
