@@ -1,38 +1,48 @@
-# Base image for build
-FROM node:20.8.0-alpine AS build
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
 
-# Create app directory
+FROM node:20.8.0-alpine As development
+
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
-# Install app dependencies
 RUN npm ci
 
-# Bundle app source
-COPY . .
+COPY --chown=node:node . .
 
-# Creates a "dist" folder with the production build
-RUN npm run build
+USER node
 
-# Base image for production
-FROM node:20.8.0-alpine AS production
+###################
+# BUILD FOR PRODUCTION
+###################
 
-# Create app directory
+FROM node:20.8.0-alpine As build
+
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node . .
 
-# Install app dependencies
-RUN npm ci --omit=dev
+RUN npm run build
 
-# Copy a "dist" folder for the production build
-COPY --from=build /usr/src/app/dist ./dist
+ENV NODE_ENV production
 
-# Start the server using the production build
+RUN npm ci --omit=dev && npm cache clean --force
+
+USER node
+
+###################
+# PRODUCTION
+###################
+
+FROM node:20.8.0-alpine As production
+
+WORKDIR /usr/src/app
+
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+
 CMD [ "node", "dist/main.js" ]
-
-# Expose port
-EXPOSE 3000
