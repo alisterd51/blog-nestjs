@@ -1,7 +1,8 @@
 name: Conventional commitses
 
 on:
-  pull_request: {}
+  pull_request:
+  merge_group:
 
 jobs:
   conventional-commits-checker:
