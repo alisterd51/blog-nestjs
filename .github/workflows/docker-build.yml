@@ -2,8 +2,7 @@ name: Docker Build CI
 
 on:
   pull_request:
-    branches:
-      - master
+  merge_group:
 
 jobs:
   build:
