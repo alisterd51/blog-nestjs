@@ -18,35 +18,15 @@
   "enabledManagers": ["dockerfile", "npm", "github-actions", "regex"],
   "packageRules": [
     {
-      "matchManagers": ["dockerfile"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "enabled": true
+      "description": "Automatically merge minor and patch level updates",
+      "matchUpdateTypes": ["patch", "pin", "pinDigest", "digest"],
+      "automerge": true
     },
     {
       "description": "Automatically merge minor and patch level updates",
-      "matchManagers": ["npm"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "enabled": true
-    },
-    {
-      "description": "Automatically merge minor and patch level updates",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "enabled": true
-    },
-    {
-      "description": "Automatically merge minor and patch level updates",
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "enabled": true
+      "automerge": true
     }
   ],
   "customManagers": [
