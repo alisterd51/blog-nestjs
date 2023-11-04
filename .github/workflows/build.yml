@@ -35,8 +35,8 @@ jobs:
           cache: 'npm'
       - name: Clean install
         run: npm ci
-      - name: Lint
-        run: npm run lint
+      - name: Eslint
+        run: npm run test:lint
 
   lint-prettier:
     needs: [setup]
@@ -54,7 +54,7 @@ jobs:
       - name: Clean install
         run: npm ci
       - name: Prettier
-        run: npm run prettier
+        run: npm run test:format
 
   lint-dockerfile:
     needs: [setup]
@@ -174,6 +174,11 @@ jobs:
       JWT_SECRET: ${{ vars.JWT_SECRET }}
       BLOG_ADMIN_USER: ${{ vars.BLOG_ADMIN_USER }}
       BLOG_ADMIN_PASSWORD: ${{ vars.BLOG_ADMIN_PASSWORD }}
+      FT_AUTHORIZATION_URL: ${{ vars.FT_AUTHORIZATION_URL }}
+      FT_TOKEN_URL: ${{ vars.FT_TOKEN_URL }}
+      FT_CLIENT_ID: ${{ vars.FT_CLIENT_ID }}
+      FT_CLIENT_SECRET: ${{ vars.FT_CLIENT_SECRET }}
+      FT_CALLBACK_URL: ${{ vars.FT_CALLBACK_URL }}
 
   release:
     needs:
