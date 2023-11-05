@@ -2,6 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-oauth2';
 import { AuthService } from './auth.service';
+import { Profile } from 'passport';
+import { lastValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class Oauth2Strategy extends PassportStrategy(Strategy) {
@@ -15,11 +17,13 @@ export class Oauth2Strategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(username, password);
-    if (!user) {
+  async validate(accessToken: string): Promise<any> {
+    const data = (await lastValueFrom(this.authService.getMe(accessToken)))
+      .data;
+    const user42 = await this.authService.validateUser42(data.login);
+    if (!user42) {
       throw new UnauthorizedException();
     }
-    return user;
+    return user42;
   }
 }

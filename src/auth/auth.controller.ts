@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Request,
+  Response,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
@@ -14,8 +21,15 @@ export class AuthController {
 
   @Public()
   @UseGuards(Oauth2AuthGuard)
-  @Post('login2')
-  async login2(@Request() req) {
+  @Get('oauth2')
+  async oauth2(@Request() req) {
+    //return req.user;
+  }
+
+  @Public()
+  @UseGuards(Oauth2AuthGuard)
+  @Get('oauth2/callback')
+  async oauth2Callback(@Request() req, @Response() res) {
     return req.user;
   }
 

@@ -10,6 +10,7 @@ import { Oauth2Strategy } from './oauth2.strategy';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '3600s' },
     }),
+    HttpModule,
   ],
   controllers: [AuthController],
   providers: [
