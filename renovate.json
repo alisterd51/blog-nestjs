@@ -15,7 +15,7 @@
     "assignees": ["@alisterd51"]
   },
   "separateMinorPatch": true,
-  "enabledManagers": ["dockerfile", "npm", "github-actions", "regex"],
+  "enabledManagers": ["dockerfile", "npm", "github-actions", "custom.regex"],
   "packageRules": [
     {
       "description": "Automatically merge minor and patch level updates",
