@@ -2,7 +2,7 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-FROM node:22.4.0-alpine3.20@sha256:1e847ddc61d073787aaca688e2a6568d77688b4eae561c806efeb39617caa53f As development
+FROM node:22.4.1-alpine3.20@sha256:ba898e86c2cc720c8cf2ae05f8d2d4697fe0c8ca3e920d6fbf14a6cbf50bb9ca As development
 
 WORKDIR /usr/src/app
 
@@ -18,7 +18,7 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 
-FROM node:22.4.0-alpine3.20@sha256:1e847ddc61d073787aaca688e2a6568d77688b4eae561c806efeb39617caa53f As build
+FROM node:22.4.1-alpine3.20@sha256:ba898e86c2cc720c8cf2ae05f8d2d4697fe0c8ca3e920d6fbf14a6cbf50bb9ca As build
 
 WORKDIR /usr/src/app
 
@@ -38,7 +38,7 @@ USER node
 # PRODUCTION
 ###################
 
-FROM node:22.4.0-alpine3.20@sha256:1e847ddc61d073787aaca688e2a6568d77688b4eae561c806efeb39617caa53f As production
+FROM node:22.4.1-alpine3.20@sha256:ba898e86c2cc720c8cf2ae05f8d2d4697fe0c8ca3e920d6fbf14a6cbf50bb9ca As production
 
 WORKDIR /usr/src/app
 
