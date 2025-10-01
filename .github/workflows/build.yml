@@ -139,7 +139,7 @@ jobs:
         node: [16, 18, 20, 22]
     services:
       postgres:
-        image: postgres:16@sha256:8892f23a412f88fd85ce2788486edfb3cb6b8750e488e1f77568f3185145cba5
+        image: postgres:16@sha256:fb9aa6d07b0fe53e94e8470977f316d1cdb39b8cdb33c45279ff0bbe32067c25
         env:
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
